@@ -1,2 +1,5 @@
-# processing_py
-A powerful and easy-to-use Graphics Library for Python based on Processing. 
+# processing-py
+
+processing-py is a graphics library for Python based on processing.
+
+[homepage](https://py.processing.org/)

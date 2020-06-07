@@ -1,0 +1,7 @@
+# Constants
+CENTER = 3
+LEFT = 37
+RIGHT = 39
+TOP = 101
+BOTTOM = 102
+BASELINE = 0
