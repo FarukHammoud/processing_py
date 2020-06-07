@@ -10,9 +10,9 @@ pip install processing-py
 
 from processing_py import *
 
-app = App(600,400) # width and height 
+app = App(600,400)
 
-app.background(255,0,0) # rgb color
+app.background(255,0,0)
 app.redraw()
 
 app.exit()
