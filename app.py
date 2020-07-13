@@ -209,9 +209,9 @@ class App(Thread):
 	def save(self,*args):
 		self.std_function('save',*args)
 	
-	def saveFrame(self,*args):
-		self.std_function('saveFrame',*args)
-
+	def saveFrame(self,file_name):
+		self.sendLine('saveFrame(\''+str(file_name)+'\''+')')
+		
 	def loadShape(self,*args):
 		self.std_function('loadShape',*args)
 	
