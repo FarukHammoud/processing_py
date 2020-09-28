@@ -1,6 +1,7 @@
 from threading import Thread, Event
 from subprocess import Popen, PIPE
 from processing_py.listener import Listener
+from processing_py.color import Color, color_mode
 import sys
 import datetime as date
 import os
@@ -73,15 +74,27 @@ class App(Thread):
 			s += str(l[len(l)-1])
 		s += ')'
 		self.sendLine(s)
+	
+	def colorMode(self,*args):
+		color_mode = args[0] 
+		self.std_function('colorMode',*args)
 
 	def background(self,*args):
-		self.std_function('background',*args)
+		if isinstance(args[0], Color):
+			color = args[0]
+			self.std_function('background',*color.parameters())
+		else:
+			self.std_function('background',*args)
 
 	def ellipse(self,*args):
 		self.std_function('ellipse',*args)
 
 	def stroke(self,*args):
-		self.std_function('stroke',*args)
+		if isinstance(args[0], Color):
+			color = args[0]
+			self.std_function('stroke',*color.parameters())
+		else:
+			self.std_function('stroke',*args)
 
 	def arc(self,*args):
 		self.std_function('arc',*args)
@@ -93,7 +106,11 @@ class App(Thread):
 		self.std_function('rect',*args)
 
 	def fill(self,*args):
-		self.std_function('fill',*args)
+		if isinstance(args[0], Color):
+			color = args[0]
+			self.std_function('fill',*color.parameters())
+		else:
+			self.std_function('fill',*args)
 
 	def scale(self,*args):
 		self.std_function('scale',*args)

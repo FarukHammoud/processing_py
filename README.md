@@ -31,4 +31,4 @@ app.exit() # close the window
 
 ## More functions
 
-Explore all the possibities in the [Processing Reference](https://processing.org/reference/).
+Explore all the possibilities in the [Processing Reference](https://processing.org/reference/).
