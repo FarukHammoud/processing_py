@@ -64,3 +64,10 @@ while(True):
 ## More functions
 
 Explore all the possibilities in the [Processing Reference](https://processing.org/reference/).
+
+
+## Issues
+
+You must use a specific version of Java (jre-8u202) that can be downloaded  [here](https://www.oracle.com/java/technologies/javase/javase8-archive-downloads.html).
+Then, you must include the java/bin folder (that contains java.exe) in your [path](https://www.java.com/fr/download/help/path.html).
+
