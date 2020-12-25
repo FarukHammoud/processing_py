@@ -12,26 +12,31 @@ def settings():
         size(size_x,size_x)
     else:
         size(size_x,size_y)
-    println('[Jython] Created!')
-
+    System.err.println('[Jython] Created!')
+    send_echo('online')
 
 def draw():
-    refresh_global_variables()
     listen()        
 
-def refresh_global_variables():
-	list_ = [str(millis()),str(mouseX),str(mouseY),str(key)]
-	saveStrings("global_variables.txt", list_)
+def send_variables_ack():
+    println('!'+str(millis())+','+str(mouseX)+','+str(mouseY)+','+str(key)+',')
+
+def send_echo(txt):
+    println(txt)
 
 def listen():
     while(True):
         try:
             reader = BufferedReader(InputStreamReader(System.in))
             input = str(reader.readLine())
-            println(input) #echo
+
             if input == 'redraw()':
+                send_variables_ack()
                 break
-            exec(input)
+            else:
+                send_echo(input) #echo
+                exec(input)
+   
         except BaseException as e :
             System.err.println(e)
   

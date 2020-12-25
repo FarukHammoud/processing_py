@@ -5,11 +5,11 @@ from processing_py.color import Color, color_mode
 import sys
 import datetime as date
 import os
+import re
 
-class App(Thread):
+class App():
 
 	def __init__(self,size_x = -1,size_y = -1):
-		Thread.__init__(self)
 
 		self.millis_ = 0
 		self.mouseX = 0
@@ -26,31 +26,22 @@ class App(Thread):
 		os.environ['SIZE_Y'] = str(size_y)
 		self.stream = Popen(['java','-jar','processing-py.jar','i3_jython.py'],cwd=os.path.dirname(os.path.realpath(__file__))+'/processing',stdin=PIPE, stdout=PIPE,stderr=PIPE)
 		Listener(self.stream.stderr,self.isDead)
-		print(self.waitAnswer())
-		self.start()
+		self.waitAnswer()
 	
 	def waitAnswer(self):
-		return self.stream.stdout.readline().decode('utf-8')
+		ans = self.stream.stdout.readline().decode('utf-8')
+		self.handle_answer(ans)
 
-	def run(self):
-		while(not self.isDead.isSet()):
-			self.get_global_variables()
-
-	def get_global_variables(self):
-		try:
-			file = open(os.path.dirname(os.path.realpath(__file__))+'/processing/global_variables.txt','r')
-			lines = file.readlines()
-			#global millis_,mouseX,mouseY,key
-			self.millis_ = int(lines[0])
-			self.pmouseX = self.mouseX
-			self.pmouseY = self.mouseY
-			self.mouseX = int(lines[1])
-			self.mouseY = int(lines[2])
-			self.key = str(lines[3])
-			file.close()
-		except BaseException as e:
-			pass
-			#print(e) ignoring IO errors
+	def handle_answer(self,ans):
+		if ans != '':
+			if ans[0] == '!':
+				find = ans[1:].split(',')
+				self.millis_ = int(find[0])
+				self.pmouseX = self.mouseX
+				self.pmouseY = self.mouseY
+				self.mouseX = int(find[1])
+				self.mouseY = int(find[2])
+				self.key = str(find[3])
 
 	def print_(self,*args):
 		print(*args, file=sys.stderr)
@@ -73,7 +64,7 @@ class App(Thread):
 				s += ','
 			s += str(l[len(l)-1])
 		s += ')'
-		self.sendLine(s)
+		return self.sendLine(s)
 	
 	def colorMode(self,*args):
 		color_mode = args[0] 
