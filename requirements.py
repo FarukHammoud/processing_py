@@ -3,8 +3,6 @@ import platform
 import os
 import zipfile
 from clint.textui import progress,colored, puts
-import subprocess
-import re
 
 def extract_file(path, to_directory='.'):
     if path.endswith('.zip'):
@@ -43,7 +41,7 @@ def download_processing():
         print('[ERROR] OS',p,b,'not supported')
         return 0
 
-    print('Downloading Processing.py Command Line Tools ... (~120MB)')
+    print('Downloading Processing.py & Java Runtime Environment 8u202 ... (~120MB)')
 
     r = requests.get(url, stream=True)
     with open(package_folder+'/processing.zip', 'wb') as f:
@@ -56,8 +54,6 @@ def download_processing():
     print('Extracting file ...')
     extract_file('processing.zip',os.path.dirname(os.path.realpath(__file__)))
     
-
-
 def check_requirements():
 
     package_folder = os.path.dirname(os.path.realpath(__file__))
@@ -68,8 +64,3 @@ def check_requirements():
     if not processing_folder_downloaded:
         download_processing()
         
-    # JRE 1.8.0_202
-    javaInfo = subprocess.check_output('java -version', shell=True, stderr=subprocess.STDOUT)
-    javaVersion = re.search(r'"[0-9\._]*"', javaInfo.decode().split("\r")[0]).group().replace('"', '')
-    if not javaVersion=='1.8.0_202':
-        print('Seems that you dont have Java Runtime Edition 1.8.0_202 installed...')
