@@ -24,7 +24,8 @@ class App():
 		print('Starting App...',file=sys.stderr)
 		os.environ['SIZE_X'] = str(size_x)
 		os.environ['SIZE_Y'] = str(size_y)
-		self.stream = Popen(['java','-jar','processing-py.jar','../i3_jython.py'],cwd=os.path.dirname(os.path.realpath(__file__))+'/processing',stdin=PIPE, stdout=PIPE,stderr=PIPE)
+		package_directory = os.path.dirname(os.path.realpath(__file__))
+		self.stream = Popen([package_directory+'/processing/jre/bin/java.exe','-jar','processing-py.jar','../i3_jython.py'],cwd=package_directory+'/processing',stdin=PIPE, stdout=PIPE,stderr=PIPE)
 		Listener(self.stream.stderr,self.isDead)
 		self.waitAnswer()
 
