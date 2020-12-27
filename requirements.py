@@ -53,6 +53,11 @@ def download_processing():
 
     print('Extracting file ...')
     extract_file('processing.zip',os.path.dirname(os.path.realpath(__file__)))
+
+    if p == 'Darwin' or p == 'Linux':
+        os.chmod(package_folder+"/processing/jre/bin/java", 0o775)
+    elif p == 'Windows':
+        os.chmod(package_folder+"/processing/jre/bin/java.exe", 0o775)
     
 def check_requirements():
 
