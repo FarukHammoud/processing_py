@@ -1,16 +1,16 @@
-from threading import Thread, Event
+from threading import Event
 from subprocess import Popen, PIPE
 from processing_py.listener import Listener
 from processing_py.color import Color, color_mode
+from processing_py.requirements import check_requirements
 import sys
 import datetime as date
 import os
-import re
 
 class App():
 
 	def __init__(self,size_x = -1,size_y = -1):
-
+		check_requirements()
 		self.millis_ = 0
 		self.mouseX = 0
 		self.mouseY = 0
@@ -27,7 +27,7 @@ class App():
 		self.stream = Popen(['java','-jar','processing-py.jar','../i3_jython.py'],cwd=os.path.dirname(os.path.realpath(__file__))+'/processing',stdin=PIPE, stdout=PIPE,stderr=PIPE)
 		Listener(self.stream.stderr,self.isDead)
 		self.waitAnswer()
-	
+
 	def waitAnswer(self):
 		ans = self.stream.stdout.readline().decode('utf-8')
 		self.handle_answer(ans)
