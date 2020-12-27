@@ -25,7 +25,7 @@ class App():
 		os.environ['SIZE_X'] = str(size_x)
 		os.environ['SIZE_Y'] = str(size_y)
 		package_directory = os.path.dirname(os.path.realpath(__file__))
-		self.stream = Popen([package_directory+'/processing/jre/bin/java.exe','-jar','processing-py.jar','../i3_jython.py'],cwd=package_directory+'/processing',stdin=PIPE, stdout=PIPE,stderr=PIPE)
+		self.stream = Popen([package_directory+'/processing/jre/bin/java','-jar','processing-py.jar','../i3_jython.py'],cwd=package_directory+'/processing',stdin=PIPE, stdout=PIPE,stderr=PIPE)
 		Listener(self.stream.stderr,self.isDead)
 		self.waitAnswer()
 
