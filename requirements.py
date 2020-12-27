@@ -9,8 +9,13 @@ def extract_file(path, to_directory='.'):
         opener, mode = zipfile.ZipFile, 'r'
     else: 
         raise ValueError
-
-    cwd = os.getcwd()
+    
+    cwd = '.'
+    try:
+        cwd = os.getcwd()
+    except BaseException:
+        pass
+    
     os.chdir(to_directory)
 
     try:
