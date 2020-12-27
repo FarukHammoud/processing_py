@@ -24,7 +24,7 @@ class App():
 		print('Starting App...',file=sys.stderr)
 		os.environ['SIZE_X'] = str(size_x)
 		os.environ['SIZE_Y'] = str(size_y)
-		self.stream = Popen(['java','-jar','processing-py.jar','i3_jython.py'],cwd=os.path.dirname(os.path.realpath(__file__))+'/processing',stdin=PIPE, stdout=PIPE,stderr=PIPE)
+		self.stream = Popen(['java','-jar','processing-py.jar','../i3_jython.py'],cwd=os.path.dirname(os.path.realpath(__file__))+'/processing',stdin=PIPE, stdout=PIPE,stderr=PIPE)
 		Listener(self.stream.stderr,self.isDead)
 		self.waitAnswer()
 	
@@ -51,8 +51,11 @@ class App():
 
 	def sendLine(self,line):
 		line += '\n'
-		self.stream.stdin.write(line.encode('utf-8'))
-		self.stream.stdin.flush()
+		try:
+			self.stream.stdin.write(line.encode('utf-8'))
+			self.stream.stdin.flush()
+		except BaseException:
+			self.close()
 		return self.waitAnswer()
 
 	def std_function(self,name,*args):
@@ -368,10 +371,20 @@ class App():
 		self.std_function('resetMatrix')
 	
 	def exit(self):
-		self.std_function('exit')
-		self.std_function('redraw')
-		self.stream.terminate()
-		self.isDead.set()
+		try:
+			self.std_function('exit')
+			self.std_function('redraw')
+			self.stream.terminate()
+			self.isDead.set()
+		except BaseException:
+			pass
+	
+	def close(self):
+		try:
+			self.stream.terminate()
+			self.isDead.set()
+		except BaseException:
+			pass
 		
 	def day(self):
 		import datetime

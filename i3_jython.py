@@ -39,7 +39,3 @@ def listen():
    
         except BaseException as e :
             System.err.println(e)
-  
-#def exit():
-#    System.err.println('[Jython] Closed.')
-#    super.exit()
