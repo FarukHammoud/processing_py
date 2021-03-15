@@ -19,6 +19,7 @@ class App():
 		self.width = size_x
 		self.height = size_y
 		self.key = ''
+		self.images = []
 
 		self.isDead = Event()
 		print('Starting App...',file=sys.stderr)
@@ -226,6 +227,15 @@ class App():
 		
 	def loadShape(self,*args):
 		self.std_function('loadShape',*args)
+	
+	def loadImage(self,file_name):
+		# Only working with complete file address
+		key = 'PImage_'+str(len(self.images))
+		self.sendLine(key + ' = loadImage(\''+str(file_name)+'\''+')')
+		return key
+	
+	def image(self,*args):
+		self.std_function('image',*args)
 	
 	def shapeMode(self,*args):
 		self.std_function('shapeMode',*args)
