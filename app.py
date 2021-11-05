@@ -232,6 +232,9 @@ class App():
 		# Only working with complete file address
 		key = 'PImage_'+str(len(self.images))
 		self.sendLine(key + ' = loadImage(\''+str(file_name)+'\''+')')
+		# The self.images is never updated, so the "key" remains the same
+		# can't upload multiple images
+		self.images.append(key) #resolves the issues and updates the self.images
 		return key
 	
 	def image(self,*args):
